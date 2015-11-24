@@ -17,7 +17,9 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
     try{
       DatabaseService.set($cordovaSQLite.openDB({name: "my.db"}));
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE student");
+      //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE activity");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
+      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , date text, place text, user_max number)");
     }
     catch(e){
       console.log("Initialize DB not work in browser");
