@@ -1,4 +1,4 @@
-IonicCheckIn.controller('CameraCtrl', function($scope, $rootScope, $cordovaBarcodeScanner, $ionicPlatform, $ionicPopup, $timeout, $cordovaSQLite, DatabaseService) {
+IonicCheckIn.controller('CameraCtrl', function($scope, $rootScope, $cordovaBarcodeScanner, $ionicPlatform, $ionicPopup, $timeout, $interval, $cordovaSQLite, DatabaseService) {
 
 console.log("CameraCtrl");
 
@@ -15,7 +15,15 @@ console.log("CameraCtrl");
 		            		//console.log(result.rows.item(0));
 		            		$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
 		            		"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
-
+		            		var count = 3;
+		            		var interval = $interval(function(){
+		            			$scope.saveText = 'Save (' + count + ')';
+		            			count--;
+		            			if(count == -1){
+		            				$scope.saveText = 'Saved';
+		            				$interval.cancel(interval);
+		            			}
+		            		}, 1000, 4);
 		            	}
 		            	else{
 		            		console.log("No row exist");
@@ -64,6 +72,15 @@ console.log("CameraCtrl");
 				if(result.rows.length > 0){
 					$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
 					"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
+					var count = 3;
+					var interval = $interval(function(){
+						$scope.saveText = 'Save (' + count + ')';
+						count--;
+						if(count == -1){
+							$scope.saveText = 'Saved';
+							$interval.cancel(interval);
+						}
+					}, 1000, 4);
 				}
 				else{
 					console.log("No row exist");

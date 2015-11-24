@@ -16,8 +16,8 @@
     	<div class="item item-text-wrap"><span ng-bind-html="scanResults"></span>
     	</div>
     </div>
-    <button class="button button-block button-primary" ng-click="insertManual()">
-    	<i class="icon ion-ios-compose-outline"></i> Insert manual
+    <button class="button button-block button-balanced" ng-click="save()" ng-show="scanResults != 'No data'">
+    	<i class="icon ion-android-done"></i> {{saveText}}
     </button>
   </ion-content>
 </ion-view>
