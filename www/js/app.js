@@ -16,7 +16,7 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
 
     try{
       DatabaseService.set($cordovaSQLite.openDB({name: "my.db"}));
-      $cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE student");
+      //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE student");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
     }
     catch(e){

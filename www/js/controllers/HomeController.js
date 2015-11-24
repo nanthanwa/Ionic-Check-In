@@ -1,16 +1,6 @@
-IonicCheckIn.controller('HomeCtrl', function($scope, $ionicPlatform, $cordovaSQLite, DatabaseService) {
+IonicCheckIn.controller('HomeCtrl', function($scope, $ionicPlatform, $timeout, $cordovaSQLite, DatabaseService) {
 	console.log("HomeCtrl");
-	
-
-	function insertAllStudent(){
-		var query = "INSERT INTO student (std_id, firstname, lastname, gender) VALUES (?, ?, ?, ?)";
-		$cordovaSQLite.execute(db, query, [std_id, firstname, lastname, gender]).then(function(result){
-			console.log(result);
-		}, function(error){
-			console.log(error);
-		})
-	}
-
+	var db = DatabaseService.get();
 
 	$scope.insert = function(std_id, firstname, lastname, gender){
 		var db = DatabaseService.get();
