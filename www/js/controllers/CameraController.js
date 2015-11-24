@@ -26,7 +26,7 @@ console.log("CameraCtrl");
 	$scope.insertManual = function(){
 		$scope.data = {}
 		var myPopup = $ionicPopup.show({
-			template: '<input type="text" ng-model="data.std_id">',
+			template: '<input type="number" ng-model="data.std_id" autofocus>',
 			title: 'Enter Student ID',
 			subTitle: 'Please make sure to insert Student ID correctly!',
 			scope: $scope,
