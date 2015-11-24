@@ -1,6 +1,6 @@
 var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaSQLite, DatabaseService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -12,6 +12,15 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
+    }
+
+    try{
+      DatabaseService.set($cordovaSQLite.openDB({name: "my.db"}));
+      $cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE student");
+      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
+    }
+    catch(e){
+      console.log("Initialize DB not work in browser");
     }
   });
 })
