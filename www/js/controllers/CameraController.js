@@ -58,32 +58,19 @@ console.log("CameraCtrl");
 		myPopup.then(function(res) {
 			//console.log('Tapped!', res);
 			//$scope.scanResults = 'Student ID : ' + res;
-			try{
-				$ionicPlatform.ready(function() {
-					$cordovaBarcodeScanner
-					.scan()
-					.then(function(result) {
-						var db = DatabaseService.get();
-						var query = "SELECT std_id, firstname, lastname, gender FROM student WHERE std_id = ?";
-						$cordovaSQLite.execute(db, query, [res]).then(function(result){
-							if(result.rows.length > 0){
-								$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
-								"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
-							}
-							else{
-								console.log("No row exist");
-							}
-						}, function(error){
-							console.log(error);
-						})
-					}, function(error) {
-						$scope.scanResults = 'Error: ' + error;
-					});
-				});
-			}
-			catch(e){
-				console.log("Not work in browser.");
-			}
+			var db = DatabaseService.get();
+			var query = "SELECT std_id, firstname, lastname, gender FROM student WHERE std_id = ?";
+			$cordovaSQLite.execute(db, query, [res]).then(function(result){
+				if(result.rows.length > 0){
+					$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
+					"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
+				}
+				else{
+					console.log("No row exist");
+				}
+			}, function(error){
+				console.log(error);
+			})
 		});
 		// $timeout(function() {
 		// 	myPopup.close();

@@ -3,10 +3,12 @@
     <div class="card">
     	<div class="item">
     		<button class="button button-block button-large button-positive" ng-click="scan()">
-    			<i class="icon ion-qr-scanner"></i> Scan Now</button>
+    			<i class="icon ion-qr-scanner"></i> Scan Now
+    		</button>
     		<div style="text-align: center">Or</div>
     		<button class="button button-block button-primary" ng-click="insertManual()">
-    			<i class="icon ion-ios-compose-outline"></i> Insert manual</button>
+    			<i class="icon ion-ios-compose-outline"></i> Insert manual
+    		</button>
     	</div>
     </div>
     <div class="card">
@@ -14,5 +16,8 @@
     	<div class="item item-text-wrap"><span ng-bind-html="scanResults"></span>
     	</div>
     </div>
+    <button class="button button-block button-primary" ng-click="insertManual()">
+    	<i class="icon ion-ios-compose-outline"></i> Insert manual
+    </button>
   </ion-content>
 </ion-view>

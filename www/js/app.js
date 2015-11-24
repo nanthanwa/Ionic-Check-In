@@ -20,10 +20,26 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE activity");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , date text, place text, user_max number)");
+
+      var db = DatabaseService.get();
+      var query = "SELECT std_id, firstname, lastname, gender FROM student WHERE std_id = ?";
+      $cordovaSQLite.execute(db, query, ["5510110141"]).then(function(result){
+        if(result.rows.length > 0){
+          //console.log(result.rows.item(0));
+          console.log("Already have data");
+        }
+        else{
+          console.log("No row exist");
+          DatabaseService.init();
+        }
+      }, function(error){
+        console.log(error);
+      })
     }
     catch(e){
       console.log("Initialize DB not work in browser");
     }
+
   });
 })
 

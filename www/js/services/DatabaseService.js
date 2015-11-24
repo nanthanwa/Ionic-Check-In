@@ -76,11 +76,11 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     }
   }
 
-  $ionicPlatform.ready(function() {
-    $timeout(function(){
-      //insertAllStudent();
-    }, 100);
-  });
+  // $ionicPlatform.ready(function() {
+  //   $timeout(function(){
+  //     //insertAllStudent();
+  //   }, 100);
+  // });
 
 
   return {
@@ -89,6 +89,11 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     },
     set: function(dbObject){
       db = dbObject;
+    },
+    init: function(){
+      console.log("initializing...");
+      insertAllStudent();
+      console.log("done.");
     }
   };
 });
