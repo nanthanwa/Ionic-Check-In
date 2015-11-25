@@ -1,6 +1,8 @@
-IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform, $timeout) {
+IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform, $timeout,$q) {
   var db = null;
-  var list = [{"std_id":"5510110011","firstname":"กฤตมุข","lastname":"ปาปี","gender":"ชาย"},
+  var allActivity = null;
+  var joinedList = [];
+  var listStudent = [{"std_id":"5510110011","firstname":"กฤตมุข","lastname":"ปาปี","gender":"ชาย"},
               {"std_id":"5510110036","firstname":"จตุพล","lastname":"ลิ้มจู","gender":"ชาย"},
               {"std_id":"5510110041","firstname":"จักริน","lastname":"แซ่ปึ่ง","gender":"ชาย"},
               {"std_id":"5510110049","firstname":"จิรัฐติ","lastname":"วิชาธิคุณ","gender":"ชาย"},
@@ -66,9 +68,9 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
               {"std_id":"5535512036","firstname":"ปิยะเทพ","lastname":"พรหมฤทธิ์","gender":"ชาย"}];
 
   function insertAllStudent(){
-    for(var i = 0 ; i < list.length ; i++){
+    for(var i = 0 ; i < listStudent.length ; i++){
       var query = "INSERT INTO student (std_id, firstname, lastname, gender) VALUES (?, ?, ?, ?)";
-      $cordovaSQLite.execute(db, query, [list[i].std_id, list[i].firstname, list[i].lastname, list[i].gender]).then(function(result){
+      $cordovaSQLite.execute(db, query, [listStudent[i].std_id, listStudent[i].firstname, listStudent[i].lastname, listStudent[i].gender]).then(function(result){
         //console.log(result);
       }, function(error){
         console.log(error);
@@ -76,11 +78,35 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     }
   }
 
-  // $ionicPlatform.ready(function() {
-  //   $timeout(function(){
-  //     //insertAllStudent();
-  //   }, 100);
-  // });
+
+  var start_date = new Date();
+  var end_date = new Date();
+
+  var listActivity = [{"title":"Open House","owner":"สโมสรนักศึกษาคณะวิศวกรรมศาสตร์","date_start":start_date,"date_end":end_date,"place":"คณะวิศวกรรมศาสตร์","student_max":200},
+                      {"title":"พิธีไหว้ครูภาควิชาวิศวกรรมคอมพิวเตอร์ู","owner":"ภาควิชาวิศวกรรมคอมพิวเตอร์ู","date_start":start_date,"date_end":end_date,"place":"ลานใต้ภาคคอมฯ","student_max":140},
+                      {"title":"ปฐมนิเทศนักศึกษาใหม่","owner":"องค์การนักศึกษา","date_start":start_date,"date_end":end_date,"place":"ลานพระบิดา","student_max":1200}];
+
+  function insertAllActivity(){
+    for(var i = 0 ; i < listActivity.length ; i++){
+      var query = "INSERT INTO activity (title, owner, date_start, date_end, place, student_max) VALUES (?, ?, ?, ?, ?, ?)";
+      $cordovaSQLite.execute(db, query, [
+          listActivity[i].title, listActivity[i].owner, listActivity[i].date_start, listActivity[i].date_end, listActivity[i].place, listActivity[i].student_max
+        ]).then(function(result){
+        //console.log(result);
+      }, function(error){
+        console.log(error);
+      })
+    }
+  }
+
+
+  
+
+  function getJoinList(){
+
+  }
+
+
 
 
   return {
@@ -90,10 +116,44 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     set: function(dbObject){
       db = dbObject;
     },
-    init: function(){
-      console.log("initializing...");
+    initStudent: function(){
+      console.log("Initializing student...");
       insertAllStudent();
-      console.log("done.");
+      console.log("Done.");
+    },
+    initActivity: function(){
+      console.log("Initializing activity...");
+      insertAllActivity();
+      console.log("Done.");
+    },
+    setAllActivity: function(object){
+      allActivity = object;
+    },
+    getAllActivity: function(){
+      return allActivity;
+    },
+    getActivity: function(activity_id){
+      return allActivity[activity_id-1];
+    },
+    setJoinActivity: function(activity_id){
+      var query = "SELECT std_id FROM join_activity WHERE activity_id = ?";
+      $cordovaSQLite.execute(db, query, [activity_id]).then(function(result){
+        if(result.rows.length > 0){
+          for(i = 0 ; i < result.rows.length ; i++){
+            joinedList.push(result.rows.item(i));
+            console.log(joinedList[i]);
+          }
+        }
+        else{
+          console.log("No row exist");
+        }
+      }, function(error){
+        console.log(error);
+      })    
+    },
+    getJoinActivity:function(activity_id){
+      console.log(activity_id);
+      return joinedList;
     }
   };
 });

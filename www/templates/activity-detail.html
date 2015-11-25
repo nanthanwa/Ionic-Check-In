@@ -1,13 +1,17 @@
-<ion-view view-title="{{activities.name}}">
+<ion-view view-title="{{activities.title}}">
 <ion-nav-buttons side="right">
 <button class="button icon ion-ios-upload-outline" ng-click="exportCSV()">
   Export
 </button>
 </ion-nav-buttons>
   <ion-content class="padding">
-    <img ng-src="{{activities.face}}" style="width: 64px; height: 64px">
+    <!-- <img ng-src="{{activities.face}}" style="width: 64px; height: 64px"> -->
     <p>
-      {{activities.lastText}}
+      {{activities.owner}}<br>
+      {{activities.date_start}}<br>
+      {{activities.date_end}}<br>
+      {{activities.place}}<br>
+      {{activities.student_max}}
     </p>
   </ion-content>
 </ion-view>

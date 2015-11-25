@@ -1,5 +1,4 @@
 var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
-
 .run(function($ionicPlatform, $cordovaSQLite, DatabaseService) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -18,23 +17,51 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
       DatabaseService.set($cordovaSQLite.openDB({name: "my.db"}));
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE student");
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE activity");
+      //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE join_activity");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
-      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , date text, place text, user_max number)");
+      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , owner text, date_start text, date_end text, place text, student_max number)");
+      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS join_activity (id integer primary key, std_id text, activity_id, date text)");
 
       var db = DatabaseService.get();
-      var query = "SELECT std_id, firstname, lastname, gender FROM student WHERE std_id = ?";
-      $cordovaSQLite.execute(db, query, ["5510110141"]).then(function(result){
-        if(result.rows.length > 0){
-          //console.log(result.rows.item(0));
-          console.log("Already have data");
+      var query = "SELECT COUNT(*) FROM student";
+      $cordovaSQLite.execute(db, query).then(function(result){
+        if((result.rows.item(0))['COUNT(*)'] > 0){
+          console.log("Have student " + (result.rows.item(0))['COUNT(*)'] + " rows");
         }
         else{
-          console.log("No row exist");
-          DatabaseService.init();
+          console.log("No student exist");
+          DatabaseService.initStudent();
         }
       }, function(error){
         console.log(error);
       })
+
+      var query = "SELECT COUNT(*) FROM activity";
+      $cordovaSQLite.execute(db, query).then(function(result){
+        if((result.rows.item(0))['COUNT(*)'] > 0){
+          console.log("Have activity " + (result.rows.item(0))['COUNT(*)'] + " rows");
+        }
+        else{
+          console.log("No activity exist");
+          DatabaseService.initActivity();
+        }
+      }, function(error){
+        console.log(error);
+      })
+
+      // var query = "SELECT COUNT(*) FROM join";
+      // $cordovaSQLite.execute(db, query).then(function(result){
+      //   if((result.rows.item(0))['COUNT(*)'] > 0){
+      //     console.log("Have join " + (result.rows.item(0))['COUNT(*)'] + " rows");
+      //   }
+      //   else{
+      //     console.log("No join exist");
+      //     DatabaseService.initJoin();
+      //   }
+      // }, function(error){
+      //   console.log(error);
+      // })
+
     }
     catch(e){
       console.log("Initialize DB not work in browser");
@@ -86,7 +113,7 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
       }
     })
     .state('tab.activity-detail', {
-      url: '/activities/:chatId',
+      url: '/activities/:activityId',
       views: {
         'tab-activities': {
           templateUrl: 'templates/activity-detail.html',

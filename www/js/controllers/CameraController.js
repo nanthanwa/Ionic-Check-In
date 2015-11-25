@@ -64,8 +64,6 @@ console.log("CameraCtrl");
 			]
 		});
 		myPopup.then(function(res) {
-			//console.log('Tapped!', res);
-			//$scope.scanResults = 'Student ID : ' + res;
 			var db = DatabaseService.get();
 			var query = "SELECT std_id, firstname, lastname, gender FROM student WHERE std_id = ?";
 			$cordovaSQLite.execute(db, query, [res]).then(function(result){
@@ -79,6 +77,7 @@ console.log("CameraCtrl");
 						if(count == -1){
 							$scope.saveText = 'Saved';
 							$interval.cancel(interval);
+							joinActivity(res, 1);
 						}
 					}, 1000, 4);
 				}
@@ -89,11 +88,19 @@ console.log("CameraCtrl");
 				console.log(error);
 			})
 		});
-		// $timeout(function() {
-		// 	myPopup.close();
-		// }, 3000);
 	};
 
+	function joinActivity(std_id, activity_id){
+		var date = new Date();
+		var db = DatabaseService.get();
+		var query = "INSERT INTO join_activity (std_id, activity_id, date) VALUES (?, ?, ?)";
+		$cordovaSQLite.execute(db, query, [std_id.toString(), activity_id.toString(), date])
+		.then(function(result){
+			console.log(result);
+		}, function(error){
+			console.log(error);
+		})
+	}
 	$scope.scanResults = 'No data';
 
 });
