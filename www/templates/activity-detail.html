@@ -13,5 +13,12 @@
       สถานที่ : {{activities.place}}<br>
       จำนวนผู้เข้าร่วม : {{activities.student_max}}
     </p>
+
+    <div class="list list-inset">
+      <div class="item" ng-repeat="ins in listOfJoined">
+        {{ins.std_id}}
+      </div>
+    </div>
+
   </ion-content>
 </ion-view>

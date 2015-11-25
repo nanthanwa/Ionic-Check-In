@@ -33,7 +33,7 @@ IonicCheckIn.controller('ActivitiesCtrl', function($scope, Chats, DatabaseServic
 IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $interval, $cordovaEmailComposer, DatabaseService) {
   	$scope.activities = DatabaseService.getActivity($stateParams.activityId);
   	var countInterval = 0;
-  	var std_id;
+  	$scope.listOfJoined = [];
 
 	// $scope.$on('$ionicView.enter', function(e) {
 	// 	console.log("test1");
@@ -45,8 +45,8 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
   	var getDataInterval = $interval(function(){
   		console.log(DatabaseService.getJoinActivity($stateParams.activityId).length);
         if(DatabaseService.getJoinActivity($stateParams.activityId).length > 0){
-    		std_id = DatabaseService.getJoinActivity($stateParams.activityId);
-    		console.log(std_id);
+    		$scope.listOfJoined = DatabaseService.getJoinActivity($stateParams.activityId);
+    		//console.log($scope.listOfJoined);
             $interval.cancel(getDataInterval);
         }
         if(countInterval == 10){
