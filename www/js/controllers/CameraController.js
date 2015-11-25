@@ -22,6 +22,7 @@ console.log("CameraCtrl");
 		            			if(count == -1){
 		            				$scope.saveText = 'Saved';
 		            				$interval.cancel(interval);
+		            				joinActivity(result.rows.item(0).std_id, '2');
 		            			}
 		            		}, 1000, 4);
 		            	}
@@ -77,7 +78,7 @@ console.log("CameraCtrl");
 						if(count == -1){
 							$scope.saveText = 'Saved';
 							$interval.cancel(interval);
-							joinActivity(res, 1);
+							joinActivity(result.rows.item(0).std_id, '1');
 						}
 					}, 1000, 4);
 				}
@@ -94,7 +95,7 @@ console.log("CameraCtrl");
 		var date = new Date();
 		var db = DatabaseService.get();
 		var query = "INSERT INTO join_activity (std_id, activity_id, date) VALUES (?, ?, ?)";
-		$cordovaSQLite.execute(db, query, [std_id.toString(), activity_id.toString(), date])
+		$cordovaSQLite.execute(db, query, [std_id, activity_id, date])
 		.then(function(result){
 			console.log(result);
 		}, function(error){

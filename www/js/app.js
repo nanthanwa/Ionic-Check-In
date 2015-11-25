@@ -49,19 +49,6 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
         console.log(error);
       })
 
-      // var query = "SELECT COUNT(*) FROM join";
-      // $cordovaSQLite.execute(db, query).then(function(result){
-      //   if((result.rows.item(0))['COUNT(*)'] > 0){
-      //     console.log("Have join " + (result.rows.item(0))['COUNT(*)'] + " rows");
-      //   }
-      //   else{
-      //     console.log("No join exist");
-      //     DatabaseService.initJoin();
-      //   }
-      // }, function(error){
-      //   console.log(error);
-      // })
-
     }
     catch(e){
       console.log("Initialize DB not work in browser");
