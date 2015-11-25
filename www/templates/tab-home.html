@@ -1,33 +1,15 @@
 <ion-view view-title="Home">
-  <ion-content class="padding">
+<ion-content class="padding">
+<div class="list">
 
-<!--     <button ng-click="insert('5510110141','ธันวา','หนูพลอย', 'ชาย')">Insert</button>
-    <button ng-click="select('5510110661')">Select</button> -->
+  <label class="item item-radio" ng-repeat="activity in listActivityFromDatabase"> 
+    <ion-radio ng-model="choice" ng-value="activity.owner" ng-change="Change(activity)">
+        {{activity.title}}<br>
+        {{activity.owner}}<br>
+        {{activity.place}}<br>
+    </ion-radio>
+  </label>
+</div>
 
-
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
-    </div>
-  </ion-content>
+</ion-content>
 </ion-view>

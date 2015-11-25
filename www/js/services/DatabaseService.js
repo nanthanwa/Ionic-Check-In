@@ -1,6 +1,7 @@
 IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform, $timeout,$q) {
   var db = null;
   var allActivity = null;
+  var currentActivity = null;
   var joinedList = [];
   var listStudent = [{"std_id":"5510110011","firstname":"กฤตมุข","lastname":"ปาปี","gender":"ชาย"},
               {"std_id":"5510110036","firstname":"จตุพล","lastname":"ลิ้มจู","gender":"ชาย"},
@@ -154,6 +155,10 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     getJoinActivity:function(activity_id){
       console.log(activity_id);
       return joinedList;
+    },
+
+    setCurrentActivity:function(activity){
+      currentActivity = activity;
     }
   };
 });
