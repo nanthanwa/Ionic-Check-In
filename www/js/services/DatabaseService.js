@@ -136,23 +136,24 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
       return allActivity[activity_id-1];
     },
     setJoinActivity: function(activity_id){
+      joinedList = [];
       var query = "SELECT std_id FROM join_activity WHERE activity_id = ?";
       $cordovaSQLite.execute(db, query, [activity_id]).then(function(result){
         if(result.rows.length > 0){
           for(i = 0 ; i < result.rows.length ; i++){
             joinedList.push(result.rows.item(i));
-            console.log(joinedList[i]);
           }
         }
         else{
           console.log("No row exist");
+          joinedList = [];
         }
       }, function(error){
         console.log(error);
       })    
     },
     getJoinActivity:function(activity_id){
-      console.log(activity_id);
+      //console.log(activity_id);
       return joinedList;
     }
   };
