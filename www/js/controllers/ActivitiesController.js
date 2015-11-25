@@ -45,7 +45,7 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
   		console.log(DatabaseService.getJoinActivity($stateParams.activityId).length);
         if(DatabaseService.getJoinActivity($stateParams.activityId).length > 0){
     		$scope.listOfJoined = DatabaseService.getJoinActivity($stateParams.activityId);
-    		console.log($scope.listOfJoined);
+    		//console.log($scope.listOfJoined);
     		//console.log($scope.listOfJoined);
     		for(var i = 0 ; i < $scope.listOfJoined.length ; i++){
     			var temp = [];

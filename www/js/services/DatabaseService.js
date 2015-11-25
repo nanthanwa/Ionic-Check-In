@@ -80,8 +80,8 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
   }
 
 
-  var start_date = new Date();
-  var end_date = new Date();
+  var start_date = moment().format('YYYY-MM-DD HH:mm');
+  var end_date = moment().add(1, 'days').format('YYYY-MM-DD HH:mm');
 
   var listActivity = [{"title":"Open House","owner":"สโมสรนักศึกษาคณะวิศวกรรมศาสตร์","date_start":start_date,"date_end":end_date,"place":"คณะวิศวกรรมศาสตร์","student_max":200, "img":'img/samo_eng.png'},
                       {"title":"พิธีไหว้ครูภาควิชาวิศวกรรมคอมพิวเตอร์","owner":"ภาควิชาวิศวกรรมคอมพิวเตอร์","date_start":start_date,"date_end":end_date,"place":"ลานใต้ภาคคอมฯ","student_max":140, "img":'img/coe.png'},
@@ -99,16 +99,6 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
       })
     }
   }
-
-
-  
-
-  function getJoinList(){
-
-  }
-
-
-
 
   return {
     get: function(){
@@ -138,11 +128,17 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
     },
     setJoinActivity: function(activity_id){
       joinedList = [];
-      var query = "SELECT std_id FROM join_activity WHERE activity_id = ?";
+      var query = "SELECT std_id, date FROM join_activity WHERE activity_id = ?";
       $cordovaSQLite.execute(db, query, [activity_id]).then(function(result){
         if(result.rows.length > 0){
+          var objectTemp = {};
           for(i = 0 ; i < result.rows.length ; i++){
-            joinedList.push(result.rows.item(i));
+            objectTemp = {
+              date: moment(new Date(result.rows.item(i).date)).format('YYYY-MM-DD HH:mm'),
+              std_id: result.rows.item(i).std_id
+            };
+            //console.log(result.rows.item(i));
+            joinedList.push(objectTemp);
           }
         }
         else{
