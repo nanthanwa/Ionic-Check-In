@@ -19,7 +19,7 @@ var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE activity");
       //$cordovaSQLite.execute(DatabaseService.get(), "DROP TABLE join_activity");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS student (id integer primary key, std_id text UNIQUE, firstname text, lastname text, gender text)");
-      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , owner text, date_start text, date_end text, place text, student_max number)");
+      $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS activity (id integer primary key, title text , owner text, date_start text, date_end text, place text, student_max number, img text)");
       $cordovaSQLite.execute(DatabaseService.get(), "CREATE TABLE IF NOT EXISTS join_activity (id integer primary key, std_id text, activity_id, date text)");
 
       var db = DatabaseService.get();

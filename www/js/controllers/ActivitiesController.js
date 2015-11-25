@@ -5,7 +5,7 @@ IonicCheckIn.controller('ActivitiesCtrl', function($scope, Chats, DatabaseServic
 	$scope.listActivityFromDatabase = [];
 
 	var db = DatabaseService.get();
-	var query = "SELECT id, title, owner, date_start, date_end, place, student_max FROM activity";
+	var query = "SELECT id, title, owner, date_start, date_end, place, student_max, img FROM activity";
 	try{
 		$cordovaSQLite.execute(db, query).then(function(result){
 			if(result.rows.length > 0){
