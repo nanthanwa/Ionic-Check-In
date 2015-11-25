@@ -34,11 +34,10 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
   	$scope.activities = DatabaseService.getActivity($stateParams.activityId);
   	var countInterval = 0;
   	$scope.listOfJoined = [];
+  	var std_id_joined = [];
+  	var enc;
 
-	// $scope.$on('$ionicView.enter', function(e) {
-	// 	console.log("test1");
-	// });
-
+  	var data = [["std_id"]];
 
   	DatabaseService.setJoinActivity($stateParams.activityId);
 
@@ -47,6 +46,18 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
         if(DatabaseService.getJoinActivity($stateParams.activityId).length > 0){
     		$scope.listOfJoined = DatabaseService.getJoinActivity($stateParams.activityId);
     		//console.log($scope.listOfJoined);
+    		for(var i = 0 ; i < $scope.listOfJoined.length ; i++){
+    			var temp = [];
+    			temp.push($scope.listOfJoined[i].std_id);
+    			data.push(temp);
+    		}
+    		//console.log(data);
+    		var csvContent = "";
+    		data.forEach(function(infoArray, index){
+    			dataString = infoArray.join(",");
+    			csvContent += index < data.length ? dataString+ "\n" : dataString;
+    		});
+    		enc = window.btoa(csvContent);
             $interval.cancel(getDataInterval);
         }
         if(countInterval == 10){
@@ -65,8 +76,9 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
 
 	  		var email = {
 	  			to: 'thanwa.npl@gmail.com',
-	  			subject: 'Cordova Icons',
-	  			body: 'How are you? Nice greetings from Leipzig',
+	  			subject: 'Export CSV',
+	  			attachments: ['base64:Book1.csv//' + enc],
+	  			body: 'CSV available',
 	  			isHtml: true
 	  		};
 
@@ -75,6 +87,7 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
 	  		});
 	  	}
 	  	catch(e){
+	  		console.log(e);
 	  		console.log("Not work in browser.");
 	  	}
   	}

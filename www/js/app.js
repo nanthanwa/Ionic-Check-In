@@ -1,6 +1,6 @@
 var IonicCheckIn = angular.module('Ionic-Check-In', ['ionic', 'ngCordova'])
 .run(function($ionicPlatform, $cordovaSQLite, DatabaseService) {
-  $ionicPlatform.ready(function() {
+   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
