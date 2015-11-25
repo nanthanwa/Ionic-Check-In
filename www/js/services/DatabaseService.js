@@ -84,7 +84,7 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
   var end_date = new Date();
 
   var listActivity = [{"title":"Open House","owner":"สโมสรนักศึกษาคณะวิศวกรรมศาสตร์","date_start":start_date,"date_end":end_date,"place":"คณะวิศวกรรมศาสตร์","student_max":200, "img":'img/samo_eng.png'},
-                      {"title":"พิธีไหว้ครูภาควิชาวิศวกรรมคอมพิวเตอร์ู","owner":"ภาควิชาวิศวกรรมคอมพิวเตอร์ู","date_start":start_date,"date_end":end_date,"place":"ลานใต้ภาคคอมฯ","student_max":140, "img":'img/coe.png'},
+                      {"title":"พิธีไหว้ครูภาควิชาวิศวกรรมคอมพิวเตอร์","owner":"ภาควิชาวิศวกรรมคอมพิวเตอร์","date_start":start_date,"date_end":end_date,"place":"ลานใต้ภาคคอมฯ","student_max":140, "img":'img/coe.png'},
                       {"title":"ปฐมนิเทศนักศึกษาใหม่","owner":"องค์การนักศึกษา","date_start":start_date,"date_end":end_date,"place":"ลานพระบิดา","student_max":1200, "img":'img/student_council.png'}];
 
   function insertAllActivity(){

@@ -77,7 +77,7 @@ IonicCheckIn.controller('ActivityDetailCtrl', function($scope, $stateParams, $in
 
 	  		var email = {
 	  			to: 'thanwa.npl@gmail.com',
-	  			subject: 'Export CSV',
+	  			subject: 'Export CSV ' + $scope.activities.title,
 	  			attachments: ['base64:Book1.csv//' + enc],
 	  			body: 'CSV available',
 	  			isHtml: true

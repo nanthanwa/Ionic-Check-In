@@ -15,16 +15,16 @@ console.log("CameraCtrl");
 		            		//console.log(result.rows.item(0));
 		            		$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
 		            		"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
-		            		var count = 3;
+		            		var count = 1;
 		            		var interval = $interval(function(){
-		            			$scope.saveText = 'Save (' + count + ')';
+		            			//$scope.saveText = 'Save (' + count + ')';
 		            			count--;
 		            			if(count == -1){
 		            				$scope.saveText = 'Saved';
 		            				$interval.cancel(interval);
-		            				joinActivity(result.rows.item(0).std_id, '2');
+		            				joinActivity(result.rows.item(0).std_id, $scope.data.repeatSelect);
 		            			}
-		            		}, 1000, 4);
+		            		}, 500, 2);
 		            	}
 		            	else{
 		            		console.log("No row exist");
@@ -43,7 +43,7 @@ console.log("CameraCtrl");
 	};
 
 	$scope.insertManual = function(){
-		$scope.data = {}
+		$scope.data.std_id = "";
 		var myPopup = $ionicPopup.show({
 			template: '<input type="number" ng-model="data.std_id" autofocus>',
 			title: 'Enter Student ID',
@@ -71,16 +71,16 @@ console.log("CameraCtrl");
 				if(result.rows.length > 0){
 					$scope.scanResults = "Student ID : " + result.rows.item(0).std_id + "<br>" +
 					"Name : " + result.rows.item(0).firstname + " " + result.rows.item(0).lastname;
-					var count = 3;
+					var count = 1;
 					var interval = $interval(function(){
-						$scope.saveText = 'Save (' + count + ')';
+						//$scope.saveText = 'Save (' + count + ')';
 						count--;
 						if(count == -1){
 							$scope.saveText = 'Saved';
 							$interval.cancel(interval);
-							joinActivity(result.rows.item(0).std_id, '1');
+							joinActivity(result.rows.item(0).std_id, $scope.data.repeatSelect);
 						}
-					}, 1000, 4);
+					}, 500, 2);
 				}
 				else{
 					console.log("No row exist");
@@ -104,4 +104,44 @@ console.log("CameraCtrl");
 	}
 	$scope.scanResults = 'No data';
 
+
+
+
+
+	$timeout(function(){
+		var listActivityFromDatabase = [];
+		var db = DatabaseService.get();
+		var query = "SELECT title FROM activity ORDER BY id";
+		try{
+			$cordovaSQLite.execute(db, query).then(function(result){
+				if(result.rows.length > 0){
+					for(var i = 0 ; i < result.rows.length ; i++){
+						listActivityFromDatabase.push(result.rows.item(i));
+					}				
+					var listTemp = [];
+					for(var i = 0 ; i < listActivityFromDatabase.length ; i++){
+						listTemp.push({
+							id: (i+1).toString(),
+							name: listActivityFromDatabase[i].title
+						});
+					}
+					$scope.data = {
+						repeatSelect: null,
+						availableOptions: listTemp
+					};
+				}
+				else{
+					console.log("No row exist");
+				}
+			}, function(error){
+				console.log(error);
+			})
+		}
+		catch(e){
+			console.log(e);
+			console.log("Not work in browser");
+		}
+	},500);
+
+	
 });

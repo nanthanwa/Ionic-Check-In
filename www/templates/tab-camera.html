@@ -11,6 +11,21 @@
     		</button>
     	</div>
     </div>
+
+    
+    <div class="card list">
+      <label class="item item-input item-select">
+            <div class="input-label">Activity</div>
+            <select ng-model="data.repeatSelect">
+                <option ng-repeat="option in data.availableOptions" value="{{option.id}}">
+                    {{option.name}}
+                </option>
+            </select>
+      </label>
+    </div>
+    <!-- {{data.repeatSelect}} -->
+    
+
     <div class="card">
     	<div class="item item-divider">Scan Results</div>
     	<div class="item item-text-wrap"><span ng-bind-html="scanResults"></span>
