@@ -3,6 +3,8 @@ IonicCheckIn.factory('DatabaseService', function($cordovaSQLite, $ionicPlatform,
   var allActivity = null;
   var currentActivity = null;
   var joinedList = [];
+  
+  //Sensitive information. DO NOT Use for illegal
   var listStudent = [{"std_id":"5510110011","firstname":"กฤตมุข","lastname":"ปาปี","gender":"ชาย"},
               {"std_id":"5510110036","firstname":"จตุพล","lastname":"ลิ้มจู","gender":"ชาย"},
               {"std_id":"5510110041","firstname":"จักริน","lastname":"แซ่ปึ่ง","gender":"ชาย"},
